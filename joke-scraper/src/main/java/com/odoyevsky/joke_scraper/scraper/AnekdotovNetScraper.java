@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class AnekdotovNetScraper implements JokeScraper {
+    private final WebClient webClient;
     private static final String BASE_URL = "http://anekdotov.net/";
     private static final String MENU_FULL_XPATH = "/html/body/center/div/div[2]/center/p[2]/table/tbody/tr[2]/td/table";
     private static final List<String> BAN_CATEGORY_NODE_VALUE_LIST = List.of(
@@ -18,23 +19,11 @@ public class AnekdotovNetScraper implements JokeScraper {
             "лучшие за месяц", "лучшие за неделю",
             "новые", "расскажи анекдот");
 
-    private final WebClient webClient;
 
     public AnekdotovNetScraper(){
         webClient = new WebClient();
         webClient.getOptions().setCssEnabled(false);
         webClient.getOptions().setJavaScriptEnabled(false);
-    }
-
-    public HtmlPage getPage(String url) {
-        HtmlPage page = null;
-        try {
-            page = webClient.getPage(url);
-            return page;
-        }
-        catch (Exception e){
-            throw new RuntimeException("Cannot get the html page");
-        }
     }
 
     @Override
@@ -54,6 +43,17 @@ public class AnekdotovNetScraper implements JokeScraper {
                 categories.add(extractCategoryData(htmlElement)));
 
         return categories;
+    }
+
+    private HtmlPage getPage(String url) {
+        HtmlPage page = null;
+        try {
+            page = webClient.getPage(url);
+            return page;
+        }
+        catch (Exception e){
+            throw new RuntimeException("Cannot get the html page");
+        }
     }
 
     private Category extractCategoryData(HtmlElement categoryElement){
