@@ -28,10 +28,23 @@ public class AnekdotovNetScraper implements JokeScraper {
 
     @Override
     public List<Joke> getJokes(Category category){
+        String url = BASE_URL + category.getURL();
         List<Joke> jokes = new ArrayList<>();
-        HtmlPage page = getPage(BASE_URL + category.getURL());
-        page.getBody().getElementsByAttribute("div", "class", "anekdot")
-                .forEach(jokeElement -> jokes.add(new Joke(jokeElement.getTextContent(), category)));
+        HtmlPage page;
+        String currentUrlPage;
+        int pageNumber = 0;
+
+        while(true){
+            try{
+                currentUrlPage = url + "index-page-" + pageNumber +".html";
+                page = getPage(currentUrlPage);
+                jokes.addAll(getJokesPage(page, category));
+                pageNumber++;
+            }
+            catch (PageNotFoundException e){
+                break;
+            }
+        }
 
         return jokes;
     }
@@ -45,15 +58,13 @@ public class AnekdotovNetScraper implements JokeScraper {
         return categories;
     }
 
-    private HtmlPage getPage(String url) {
-        HtmlPage page = null;
-        try {
-            page = webClient.getPage(url);
-            return page;
-        }
-        catch (Exception e){
-            throw new RuntimeException("Cannot get the html page");
-        }
+    private List<Joke> getJokesPage(HtmlPage page, Category category){
+        List<Joke> jokesTextFromPage = new ArrayList<>();
+        page = getPage(BASE_URL);
+        page.getBody().getElementsByAttribute("div", "class", "anekdot")
+                .forEach(jokeElement -> jokesTextFromPage.add(new Joke(jokeElement.getTextContent(), category)));
+
+        return jokesTextFromPage;
     }
 
     private Category extractCategoryData(HtmlElement categoryElement){
@@ -76,5 +87,16 @@ public class AnekdotovNetScraper implements JokeScraper {
     private HtmlElement getMenuElement() {
         HtmlPage page = getPage(BASE_URL);
         return page.getFirstByXPath(MENU_FULL_XPATH);
+    }
+
+    private HtmlPage getPage(String url) {
+        HtmlPage page;
+        try {
+            page = webClient.getPage(url);
+            return page;
+        }
+        catch (Exception e){
+            throw new PageNotFoundException("Page not found");
+        }
     }
 }
