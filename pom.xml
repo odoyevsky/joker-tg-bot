@@ -9,14 +9,15 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.odoyevsky</groupId>
-	<artifactId>weather-tg-bot</artifactId>
+	<artifactId>joker-tg-bot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>joker-tg-bot</name>
 	<description>Joker telegram bot</description>
     <modules>
         <module>joke-scraper</module>
-    </modules>
+		<module>joker-app</module>
+	</modules>
     <properties>
 		<java.version>17</java.version>
 	</properties>
