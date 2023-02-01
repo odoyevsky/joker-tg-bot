@@ -7,7 +7,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @Getter
-public class CategoryElement {
+public class Category {
     private final String NAME;
     private final String URL;
 }
