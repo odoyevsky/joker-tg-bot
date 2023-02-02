@@ -17,7 +17,7 @@
 
     <modules>
         <module>joke-scraper</module>
-		<module>joker-app</module>
+		<module>joke-bot</module>
 	</modules>
 
     <properties>
