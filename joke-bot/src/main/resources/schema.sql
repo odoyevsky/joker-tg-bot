@@ -1,32 +1,24 @@
-DROP TABLE IF EXISTS User cascade;
-DROP TABLE IF EXISTS Category cascade;
-DROP TABLE IF EXISTS Joke cascade;
-DROP TABLE IF EXISTS UserJoke cascade;
-DROP TABLE IF EXISTS UserCategory cascade;
-
-CREATE TABLE User(
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    userName BIGINT VARCHAR(255) not null,
-    chatId BIGINT not null
+CREATE TABLE IF NOT EXISTS users(
+    user_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user_name VARCHAR(255) NOT NULL,
+    chat_id BIGINT NOT NULL
 );
 
-CREATE TABLE Category(
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(255) not null
+CREATE TABLE IF NOT EXISTS categories(
+    category_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE Joke(
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    text VARCHAR(5000) not null,
-    FOREIGN KEY (id_category) REFERENCES Category(id)
+CREATE TABLE IF NOT EXISTS jokes(
+    joke_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    category_id BIGINT NOT NULL,
+    text VARCHAR(5000) NOT NULL,
+    FOREIGN KEY (category_id) REFERENCES categories(category_id)
 );
 
-CREATE TABLE UserJoke(
-    FOREIGN KEY (id_user) REFERENCES User(id),
-    FOREIGN KEY (id_joke) REFERENCES Joke(id)
-);
-
-CREATE TABLE UserCategory(
-    FOREIGN KEY (id_user) REFERENCES User(id),
-    FOREIGN KEY (id_category) REFERENCES Category(id)
+CREATE TABLE IF NOT EXISTS favourite_jokes(
+    user_id BIGINT NOT NULL,
+    joke_id BIGINT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (joke_id) REFERENCES jokes(joke_id)
 );
