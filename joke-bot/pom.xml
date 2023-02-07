@@ -3,11 +3,12 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
-    <groupId>com.odoyevsky</groupId>
+    <parent>
+        <groupId>com.odoyevsky</groupId>
+        <artifactId>joke-tg-bot</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
     <artifactId>joke-bot</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
@@ -15,7 +16,6 @@
         <spring.starter.version>3.0.2</spring.starter.version>
         <telegrambots.version>6.3.0</telegrambots.version>
     </properties>
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -27,7 +27,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
     <dependencies>
         <dependency>
             <groupId>org.telegram</groupId>

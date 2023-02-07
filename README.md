@@ -9,5 +9,3 @@
 ## additional joke-bot functionality:
 - suggest a joke
 - send a message to support
-
-
