@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.odoyevsky</groupId>
-        <artifactId>joker-tg-bot</artifactId>
+        <artifactId>joke-tg-bot</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>joke-scraper</artifactId>
