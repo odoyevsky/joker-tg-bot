@@ -9,9 +9,8 @@ import java.util.Optional;
 
 public interface JokeRepository extends CrudRepository<Joke, Long> {
     @Query(
-            "SELECT text FROM jokes " +
-            "ORDER BY RANDOM() " +
-            "LIMIT 1;"
+            value = "SELECT j.text FROM JOKES j ORDER BY RANDOM() LIMIT 1",
+            nativeQuery = true
     )
-    public Optional<Joke> getRandomJoke();
+    Optional<String> getRandomJoke();
 }
