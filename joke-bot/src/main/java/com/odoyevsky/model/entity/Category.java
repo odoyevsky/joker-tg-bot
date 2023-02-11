@@ -14,7 +14,7 @@ import java.util.Objects;
 public class Category {
     @Id
     @Column(name = "category_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name", unique = true)

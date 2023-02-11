@@ -1,6 +1,7 @@
 package com.odoyevsky.model.entity;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -14,12 +15,14 @@ import java.util.Set;
 public class User {
     @Id
     @Column(name = "user_id")
-    @GeneratedValue(strategy = GenerationType.AUTO      )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Setter
     @Column(name = "user_name", unique = true)
     private String userName;
 
+    @Setter
     @Column(name = "chat_id", unique = true)
     private Long chatId;
 
