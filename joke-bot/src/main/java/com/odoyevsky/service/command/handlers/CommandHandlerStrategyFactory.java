@@ -15,7 +15,7 @@ public class CommandHandlerStrategyFactory {
             case "/joke" -> context.getBean(JokeCommand.class);
             case "/categories" -> context.getBean(CategoriesCommand.class);
             case "/help" -> context.getBean(HelpCommand.class);
-            default -> throw new UnknownCommandException("Unhandled command: " + command);
+            default -> context.getBean(CategoryCommand.class);
         };
     }
 }
