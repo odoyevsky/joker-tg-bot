@@ -9,7 +9,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 @Component
 @NoArgsConstructor
-public class HelpHandler implements MessageHandler {
+public class HelpCommand implements MessageHandler {
     private static final String HELP_TEXT =
                     "/joke - случайная шутка любого жанра\n" +
                     Emojis.LIKE + "/" + Emojis.DISLIKE + " - оценить шутку\n" +

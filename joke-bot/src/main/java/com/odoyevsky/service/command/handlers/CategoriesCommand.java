@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 @Component
 @AllArgsConstructor
-public class CategoriesHandler implements MessageHandler {
+public class CategoriesCommand implements MessageHandler {
     private CategoryRepository categoryRepository;
 
     @Override
