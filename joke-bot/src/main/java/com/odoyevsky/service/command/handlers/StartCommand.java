@@ -2,36 +2,36 @@ package com.odoyevsky.service.command.handlers;
 
 import com.odoyevsky.model.entity.User;
 import com.odoyevsky.model.repository.UserRepository;
-import com.odoyevsky.service.emojis.Emojis;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
+
+import static com.odoyevsky.service.utility.TgBotsApiPreparer.prepareTextMessage;
 
 @Component
 @AllArgsConstructor
 public class StartCommand implements MessageHandler {
     private UserRepository userRepository;
 
-    private final String START_MESSAGE =
-            "/joke - случайная шутка любого жанра\n" +
-                    Emojis.LIKE + "/" + Emojis.DISLIKE + " - оценить шутку\n" +
-                    Emojis.HEART + " - добавить в избранное\n\n" +
-                    "/categories - список доступных жанров\n" +
-                    "отправь название жанра, чтобы получить соответствующую шутку\n\n" +
-                    "/favourites - избранные анекдоты\n" +
-                    Emojis.BROKEN_HEART + " - убрать из избранного\n\n" +
-                    "/help - справочная информация\n";
+    private final String START_MESSAGE = """
+            Привет! 👋
+                                                                       
+            Я бот-шутник и я знаю тысячи шуток, могу шутить как на конкретную тему, так и случайным образом 😋
+                                                                       
+            Ты можешь сохранять понравившиеся шутки, чтобы не потерять 🥰
+                                                                       
+            Пока я умею совсем немного 🥺
+            Но со временем я буду уметь делать куда больше! 😎
+            
+            Используй меню слева для выбора команд.
+            Чтобы узнать больше, используй /help.
+            """;
 
     @Override
     public SendMessage handle(Update update) {
-        SendMessage sendMessage = new SendMessage();
-        sendMessage.setText(START_MESSAGE);
-        sendMessage.setChatId(update.getMessage().getChatId());
-
         registerUser(update);
-
-        return sendMessage;
+        return prepareTextMessage(START_MESSAGE, update.getMessage().getChatId());
     }
 
     private void registerUser(Update update) {

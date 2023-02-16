@@ -7,8 +7,9 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+
+import static com.odoyevsky.service.utility.TgBotsApiPreparer.prepareTextMessage;
 
 @Component
 @AllArgsConstructor
@@ -17,18 +18,24 @@ public class CategoriesCommand implements MessageHandler {
 
     @Override
     public SendMessage handle(Update update) {
-        SendMessage sendMessage = new SendMessage();
-        sendMessage.setChatId(update.getMessage().getChatId());
-        sendMessage.setText(getCategories().toString());
-
-        return sendMessage;
+        return prepareTextMessage(getCategoriesText(), update.getMessage().getChatId());
     }
 
     private Set<Category> getCategories() {
         Iterable<Category> categoryIterable = categoryRepository.findAll();
         Set<Category> categorySet = new HashSet<>();
-
         categoryIterable.forEach(categorySet::add);
+
         return categorySet;
+    }
+
+    private String getCategoriesText() {
+        StringBuilder message = new StringBuilder("Темы шуток \uD83E\uDD78 \n");
+        getCategories().forEach(category -> message
+                .append("• ")
+                .append(category.getName())
+                .append("\n"));
+
+        return message.toString();
     }
 }
