@@ -50,9 +50,9 @@ public class LongPollingJokeBot extends TelegramLongPollingBot {
 
     private List<BotCommand> getCommands() {
         List<BotCommand> commands = new ArrayList<>();
-        commands.add(new BotCommand("/joke", "случайный анекдот"));
-        commands.add(new BotCommand("/categories", "список жанров"));
-        commands.add(new BotCommand("/favourites", "избранные анекдоты"));
+        commands.add(new BotCommand("/joke", "случайная шутка "));
+        commands.add(new BotCommand("/categories", "список тем"));
+        commands.add(new BotCommand("/favourites", "избранные шутки"));
         commands.add(new BotCommand("/help", "справочная информация"));
         return commands;
     }
