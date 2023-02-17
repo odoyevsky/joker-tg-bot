@@ -1,14 +1,15 @@
 package com.odoyevsky.service;
 
-import com.odoyevsky.exception.CategoryNotFound;
 import com.odoyevsky.model.entity.Category;
 import com.odoyevsky.model.repository.CategoryRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Component
+@AllArgsConstructor
 public class CategoryService {
     private CategoryRepository categoryRepository;
 

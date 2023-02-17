@@ -32,4 +32,6 @@ public interface JokeRepository extends CrudRepository<Joke, Long> {
                     """
     )
     Optional<Joke> getCategoryJoke(@Param("category") String category);
+
+    Optional<Joke> getJokeByText(String text);
 }
