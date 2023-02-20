@@ -1,4 +1,4 @@
-package com.odoyevsky.service.emojis;
+package com.odoyevsky.emojis;
 
 public class Emojis {
     public static final String LIKE = "\uD83D\uDC4D\uD83C\uDFFB";
@@ -6,6 +6,7 @@ public class Emojis {
     public static final String HEART = "❤️";
     public static final String BROKEN_HEART = "\uD83D\uDC94";
     public static final String CRYING = "\uD83D\uDE25";
+    public static final String SMILE_TONGUE = "\uD83D\uDE0B";
 
     private Emojis() {}
 }

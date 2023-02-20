@@ -1,37 +1,41 @@
-package com.odoyevsky.service.command.handlers;
+package com.odoyevsky.strategy;
 
 import com.odoyevsky.model.entity.User;
 import com.odoyevsky.model.repository.UserRepository;
+import com.odoyevsky.utility.TgApiUtility;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import static com.odoyevsky.service.utility.TgBotsApiPreparer.prepareTextMessage;
+import java.util.List;
 
 @Component
 @AllArgsConstructor
-public class StartCommand implements MessageHandler {
+public class StartCommand implements HandlingStrategy {
     private UserRepository userRepository;
+    private TgApiUtility tgApiUtility;
 
     private final String START_MESSAGE = """
             Привет! 👋
-                                                                       
+
             Я бот-шутник и я знаю тысячи шуток, могу шутить как на конкретную тему, так и случайным образом 😋
-                                                                       
+
             Ты можешь сохранять понравившиеся шутки, чтобы не потерять 🥰
-                                                                       
+
             Пока я умею совсем немного 🥺
             Но со временем я буду уметь делать куда больше! 😎
-            
+
             Используй меню слева для выбора команд.
             Чтобы узнать больше, используй /help.
             """;
 
     @Override
-    public SendMessage handle(Update update) {
+    public List<BotApiMethod<?>> handle(Update update) {
         registerUser(update);
-        return prepareTextMessage(START_MESSAGE, update.getMessage().getChatId());
+        return List.of(
+                tgApiUtility.createSendMessage(START_MESSAGE, update.getMessage().getChatId())
+        );
     }
 
     private void registerUser(Update update) {

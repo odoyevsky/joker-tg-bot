@@ -1,6 +1,6 @@
 package com.odoyevsky.handler;
 
-import com.odoyevsky.factory.HandlingStrategyFactory;
+import com.odoyevsky.strategy.HandlingStrategyFactory;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -20,20 +20,29 @@ public class RequestHandler {
 
         if (update.hasMessage() && update.getMessage().hasText()) {
             responseMessages = handleMessage(update);
-        }
-        else if ((update.hasCallbackQuery())){
+        } else if ((update.hasCallbackQuery())) {
             responseMessages = handleQuery(update);
         }
 
         return responseMessages;
     }
 
-    private List<BotApiMethod<?>> handleMessage(Update update){
+    private List<BotApiMethod<?>> handleMessage(Update update) {
+        log.info(
+                "ChatId: " + update.getMessage().getChatId()
+                        + " Message: " + update.getMessage().getText()
+        );
+
         String command = update.getMessage().getText();
         return commandHandlerStrategyFactory.getHandler(command).handle(update);
     }
 
-    private List<BotApiMethod<?>> handleQuery(Update update){
+    private List<BotApiMethod<?>> handleQuery(Update update) {
+        log.info(
+                "ChatId: " + update.getCallbackQuery().getMessage().getChatId()
+                        + " Message: " + update.getCallbackQuery().getData()
+        );
+
         String command = update.getCallbackQuery().getData();
         return commandHandlerStrategyFactory.getHandler(command).handle(update);
     }

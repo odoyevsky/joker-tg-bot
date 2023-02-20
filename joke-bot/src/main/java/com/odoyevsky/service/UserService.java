@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
 
 @Component
 @AllArgsConstructor
@@ -36,5 +38,17 @@ public class UserService {
         Joke joke = jokeService.getJokeByText(jokeText);
 
         user.getFavouriteJokes().remove(joke);
+    }
+
+    public List<Joke> getUsersFavouriteList(long chatId) throws UserNotFoundException{
+        User user = getUserByChatId(chatId);
+        return user.getFavouriteJokes().stream().toList();
+    }
+
+    public boolean isFavouriteJoke(long chatId, String jokeText) throws UserNotFoundException {
+        User user = getUserByChatId(chatId);
+        Optional<Joke> joke = user.getFavouriteJokes().stream().filter(j -> j.getText().equals(jokeText)).findFirst();
+
+        return joke.isPresent();
     }
 }

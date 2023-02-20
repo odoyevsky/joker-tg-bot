@@ -1,16 +1,18 @@
-package com.odoyevsky.service.command.handlers;
+package com.odoyevsky.strategy;
 
-import com.odoyevsky.service.emojis.Emojis;
-import lombok.NoArgsConstructor;
+import com.odoyevsky.emojis.Emojis;
+import com.odoyevsky.utility.TgApiUtility;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import static com.odoyevsky.service.utility.TgBotsApiPreparer.*;
+import java.util.List;
 
 @Component
-@NoArgsConstructor
-public class HelpCommand implements MessageHandler {
+@AllArgsConstructor
+public class HelpCommand implements HandlingStrategy {
+    private TgApiUtility tgApiUtility;
     private static final String HELP_TEXT = """
             /joke - случайная шутка
             
@@ -28,7 +30,7 @@ public class HelpCommand implements MessageHandler {
             """.formatted(Emojis.LIKE, Emojis.DISLIKE, Emojis.HEART, Emojis.BROKEN_HEART);
 
     @Override
-    public BotApiMethod<?> handle(Update update) {
-        return prepareTextMessage(HELP_TEXT, update.getMessage().getChatId());
+    public List<BotApiMethod<?>> handle(Update update) {
+        return List.of(tgApiUtility.createSendMessage(HELP_TEXT, update.getMessage().getChatId()));
     }
 }

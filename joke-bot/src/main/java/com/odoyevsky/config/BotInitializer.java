@@ -1,6 +1,6 @@
 package com.odoyevsky.config;
 
-import com.odoyevsky.service.LongPollingJokeBot;
+import com.odoyevsky.LongPollingJokeBot;
 import lombok.AllArgsConstructor;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
