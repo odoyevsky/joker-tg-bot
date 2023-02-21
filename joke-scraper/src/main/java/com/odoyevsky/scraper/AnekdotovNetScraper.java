@@ -1,12 +1,16 @@
-package com.odoyevsky.joke_scraper.scraper;
+package com.odoyevsky.scraper;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.odoyevsky.exception.PageNotFoundException;
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class AnekdotovNetScraper implements JokeScraper {
     private final WebClient webClient;
     private static final String BASE_URL = "http://anekdotov.net/";
@@ -25,7 +29,7 @@ public class AnekdotovNetScraper implements JokeScraper {
         webClient.getOptions().setCssEnabled(false);
         webClient.getOptions().setJavaScriptEnabled(false);
     }
-
+    
     @Override
     public List<Joke> getJokes(Category category){
         String url = BASE_URL + category.getURL();

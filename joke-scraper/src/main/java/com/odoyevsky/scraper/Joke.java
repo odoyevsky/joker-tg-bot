@@ -1,4 +1,4 @@
-package com.odoyevsky.joke_scraper.scraper;
+package com.odoyevsky.scraper;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
