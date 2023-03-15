@@ -12,19 +12,18 @@ public class HandlingStrategyFactory {
 
     public HandlingStrategy getHandler(String command) {
         return switch (command) {
-            case "/start" -> context.getBean(StartCommand.class);
-            case "/help" -> context.getBean(HelpCommand.class);
-            case "/joke" -> context.getBean(JokeCommand.class);
-            case "/favourites" -> context.getBean(FavouritesCommand.class);
-            case "/categories" -> context.getBean(CategoriesCommand.class);
-            case "/add_favourite_joke" -> context.getBean(AddFavouriteCommand.class);
-            case "/remove_favourite_joke" -> context.getBean(RemoveFavouriteCommand.class);
+            case "/start" -> context.getBean(StartCommandStrategy.class);
+            case "/help" -> context.getBean(HelpCommandStrategy.class);
+            case "/joke" -> context.getBean(JokeCommandStrategy.class);
+            case "/favourites" -> context.getBean(FavouritesCommandStrategy.class);
+            case "/categories" -> context.getBean(CategoriesCommandStrategy.class);
+            case "/add_favourite_joke" -> context.getBean(AddFavouriteCommandStrategy.class);
+            case "/remove_favourite_joke" -> context.getBean(RemoveFavouriteCommandStrategy.class);
             default -> {
                 if (!command.contains("/")) {
-                    yield context.getBean(CategoryCommand.class);
-                } else yield context.getBean(UnknownCommand.class);
+                    yield context.getBean(CategoryCommandStrategy.class);
+                } else yield context.getBean(UnknownCommandStrategy.class);
             }
         };
-
     }
 }

@@ -1,9 +1,9 @@
 package com.odoyevsky.strategy;
 
 import com.odoyevsky.exception.JokeNotFoundException;
+import com.odoyevsky.emojis.Emojis;
 import com.odoyevsky.exception.UserNotFoundException;
 import com.odoyevsky.service.JokeService;
-import com.odoyevsky.emojis.Emojis;
 import com.odoyevsky.service.UserService;
 import com.odoyevsky.utility.TgApiUtility;
 import lombok.AllArgsConstructor;
@@ -17,10 +17,10 @@ import java.util.List;
 
 @Component
 @AllArgsConstructor
-public class JokeCommand implements HandlingStrategy {
+public class CategoryCommandStrategy implements HandlingStrategy {
     private JokeService jokeService;
-    private UserService userService;
     private TgApiUtility tgApiUtility;
+    private UserService userService;
 
     @Override
     public List<BotApiMethod<?>> handle(Update update) {
@@ -31,7 +31,7 @@ public class JokeCommand implements HandlingStrategy {
         sendMessage.setChatId(chatId);
 
         try {
-            String messageText = jokeService.getRandomJoke().getText();
+            String messageText = jokeService.getCategoryJoke(update.getMessage().getText()).getText();
             sendMessage.setText(messageText);
 
             if (userService.isFavouriteJoke(chatId, messageText)) {

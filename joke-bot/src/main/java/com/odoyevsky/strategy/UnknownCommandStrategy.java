@@ -11,7 +11,7 @@ import java.util.List;
 
 @Component
 @AllArgsConstructor
-public class UnknownCommand implements HandlingStrategy {
+public class UnknownCommandStrategy implements HandlingStrategy {
     private TgApiUtility tgApiUtility;
     private static final String message = "Я не знаю такой команды " + Emojis.CRYING;
 

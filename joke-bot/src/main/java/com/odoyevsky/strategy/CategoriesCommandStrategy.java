@@ -11,7 +11,7 @@ import java.util.List;
 
 @Component
 @AllArgsConstructor
-public class CategoriesCommand implements HandlingStrategy {
+public class CategoriesCommandStrategy implements HandlingStrategy {
     private CategoryService categoryService;
     private TgApiUtility tgApiUtility;
 
