@@ -1,11 +1,29 @@
-# **Joke bot**
-## joke-bot functionality:
-- get a random joke
-- get a joke from a selected category
-- rate a joke
-- add a joke to favourite list
-- remove a joke from a favourite list
+## **Joke telegram bot**
 
-## additional joke-bot functionality:
-- suggest a joke
-- send a message to support
+Телеграм бот, который является Spring Boot приложением.
+
+### Функционал:
+
+- выдача случайной шутки
+- выдача шутки по конкретной теме
+- выдача избранных шуток пользователя
+- добавление шутки в избранное пользователя
+- удаление шутки из избранного пользователя
+- выдача справочной информации с командами
+
+## **Joke scraper**
+
+Spring Boot приложение, которое осуществляет скрейпинг шуток с сайта и сохраняет их в БД
+
+## Используемые технологии:
+
+* Java 17
+* Spring Boot, Spring Data, Spring MVC
+* Project Lombok - аннотации
+* TelegramBots - создание телеграм бота
+* HtmlUnit - скрейпинг
+* JUnit, Mockito - тестирование
+* PostgreSQL - база данных
+* Kafka - брокер сообщений
+* SLF4J - логирование
+* Maven - сборка проекта
