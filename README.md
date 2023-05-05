@@ -22,7 +22,5 @@ Spring Boot приложение, которое осуществляет скр
 * Project Lombok - аннотации
 * TelegramBots - создание телеграм бота
 * HtmlUnit - скрейпинг
-* JUnit, Mockito - тестирование
 * PostgreSQL - база данных
-* SLF4J - логирование
 * Maven - сборка проекта
