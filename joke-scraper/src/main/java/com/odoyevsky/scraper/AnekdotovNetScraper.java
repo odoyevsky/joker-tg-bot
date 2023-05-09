@@ -1,19 +1,22 @@
 package com.odoyevsky.scraper;
 
-import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlElement;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.odoyevsky.exception.PageNotFoundException;
+import lombok.extern.slf4j.Slf4j;
+import org.htmlunit.FailingHttpStatusCodeException;
+import org.htmlunit.WebClient;
+import org.htmlunit.html.HtmlElement;
+import org.htmlunit.html.HtmlPage;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
+@Slf4j
 @Component
-public class AnekdotovNetScraper implements JokeScraper {
+public class AnekdotovNetScraper {
     private final WebClient webClient;
-    private static final String BASE_URL = "http://anekdotov.net/";
+    private static final String BASE_URL = "https://anekdotov.net";
+    //Xpath элемента, в котором перечислены категории шуток
     private static final String MENU_FULL_XPATH = "/html/body/center/div/div[2]/center/p[2]/table/tbody/tr[2]/td/table";
     private static final List<String> BAN_CATEGORY_NODE_VALUE_LIST = List.of(
             "рассакажи анекдот", "архив по дням",
@@ -24,54 +27,69 @@ public class AnekdotovNetScraper implements JokeScraper {
             "новые", "расскажи анекдот");
 
 
-    public AnekdotovNetScraper(){
+    public AnekdotovNetScraper() {
         webClient = new WebClient();
-        webClient.getOptions().setCssEnabled(false);
         webClient.getOptions().setJavaScriptEnabled(false);
+        webClient.getOptions().setCssEnabled(false);
+        webClient.getOptions().setDownloadImages(false);
+        webClient.getOptions().setThrowExceptionOnScriptError(false);
+        webClient.getOptions().setThrowExceptionOnFailingStatusCode(true);
+        webClient.getOptions().setTimeout(0);
+        webClient.getOptions().setRedirectEnabled(false);
+        webClient.getOptions().setAppletEnabled(false);
+        webClient.getOptions().setActiveXNative(false);
+        webClient.setWebConnection(new FacebookConnectionBlocker(webClient));
     }
-    
-    @Override
-    public List<Joke> getJokes(Category category){
+
+    public List<Joke> getJokes(String category) {
+        return getJokes(getCategories().stream()
+                .filter(categoryC -> categoryC.getNAME().equals(category))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("This category doesn't exist"))
+        );
+    }
+
+    private List<Joke> getJokes(Category category) {
         String url = BASE_URL + category.getURL();
         List<Joke> jokes = new ArrayList<>();
         HtmlPage page;
         String currentUrlPage;
         int pageNumber = 0;
 
-        while(true){
-            try{
-                currentUrlPage = url + "index-page-" + pageNumber +".html";
+        while (true) {
+            currentUrlPage = url + "index-page-" + pageNumber + ".html";
+            log.info("Getting jokes from: " + currentUrlPage);
+
+            try {
                 page = getPage(currentUrlPage);
                 jokes.addAll(getJokesPage(page, category));
-                pageNumber++;
-            }
-            catch (PageNotFoundException e){
+            } catch (FailingHttpStatusCodeException e) {
+                log.info(e.getMessage());
                 break;
+            } catch (RuntimeException e){
+                log.info(e.getMessage());
             }
+
+            pageNumber++;
         }
 
         return jokes;
     }
 
-    @Override
-    public List<Category> getCategories(){
-        List<Category> categories = new ArrayList<>();
-        getCategoryElements().forEach(htmlElement ->
-                categories.add(extractCategoryData(htmlElement)));
-
-        return categories;
+    public List<Category> getCategories() {
+        return getCategoryElements().stream()
+                .map(this::extractCategoryData)
+                .toList();
     }
 
-    private List<Joke> getJokesPage(HtmlPage page, Category category){
-        List<Joke> jokesTextFromPage = new ArrayList<>();
-        page = getPage(BASE_URL);
-        page.getBody().getElementsByAttribute("div", "class", "anekdot")
-                .forEach(jokeElement -> jokesTextFromPage.add(new Joke(jokeElement.getTextContent(), category)));
-
-        return jokesTextFromPage;
+    private List<Joke> getJokesPage(HtmlPage page, Category category) {
+        return page.getBody().getElementsByAttribute("div", "class", "anekdot")
+                .stream()
+                .map(jokeElement -> new Joke(jokeElement.getTextContent(), category))
+                .toList();
     }
 
-    private Category extractCategoryData(HtmlElement categoryElement){
+    private Category extractCategoryData(HtmlElement categoryElement) {
         String name = categoryElement.getTextContent();
         String url = categoryElement.getAttribute("href");
 
@@ -85,7 +103,7 @@ public class AnekdotovNetScraper implements JokeScraper {
 
         return categoryElements.stream()
                 .filter(categoryElement -> !BAN_CATEGORY_NODE_VALUE_LIST.contains(categoryElement.getTextContent()))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private HtmlElement getMenuElement() {
@@ -94,13 +112,10 @@ public class AnekdotovNetScraper implements JokeScraper {
     }
 
     private HtmlPage getPage(String url) {
-        HtmlPage page;
         try {
-            page = webClient.getPage(url);
-            return page;
-        }
-        catch (Exception e){
-            throw new PageNotFoundException("Page not found");
+            return webClient.getPage(url);
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage());
         }
     }
 }
