@@ -1,6 +1,6 @@
 package com.odoyevsky.handler;
 
-import com.odoyevsky.strategy.HandlingStrategyFactory;
+import com.odoyevsky.factory.CommandStrategyFactory;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,7 @@ import java.util.List;
 @Component
 @AllArgsConstructor
 public class RequestHandler {
-    private final HandlingStrategyFactory commandHandlerStrategyFactory;
+    private final CommandStrategyFactory commandHandlerStrategyFactory;
 
     public List<BotApiMethod<?>> handle(Update update) {
         List<BotApiMethod<?>> responseMessages = null;
@@ -29,21 +29,21 @@ public class RequestHandler {
 
     private List<BotApiMethod<?>> handleMessage(Update update) {
         log.info(
-                "ChatId: " + update.getMessage().getChatId()
-                        + " Message: " + update.getMessage().getText()
+                "ChatId: " + update.getMessage().getChatId() +
+                " Message: " + update.getMessage().getText()
         );
 
         String command = update.getMessage().getText();
-        return commandHandlerStrategyFactory.getHandler(command).handle(update);
+        return commandHandlerStrategyFactory.getCommandStrategy(command).handle(update);
     }
 
     private List<BotApiMethod<?>> handleQuery(Update update) {
         log.info(
-                "ChatId: " + update.getCallbackQuery().getMessage().getChatId()
-                        + " Message: " + update.getCallbackQuery().getData()
+                "ChatId: " + update.getCallbackQuery().getMessage().getChatId() +
+                " Message: " + update.getCallbackQuery().getData()
         );
 
         String command = update.getCallbackQuery().getData();
-        return commandHandlerStrategyFactory.getHandler(command).handle(update);
+        return commandHandlerStrategyFactory.getCommandStrategy(command).handle(update);
     }
 }

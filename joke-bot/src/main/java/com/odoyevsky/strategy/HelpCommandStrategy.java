@@ -11,7 +11,7 @@ import java.util.List;
 
 @Component
 @AllArgsConstructor
-public class HelpCommandStrategy implements HandlingStrategy {
+public class HelpCommandStrategy implements CommandStrategy {
     private TgApiUtility tgApiUtility;
     private static final String HELP_TEXT = """
             /joke - случайная шутка

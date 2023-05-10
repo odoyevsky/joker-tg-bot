@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class HandlingStrategyFactory {
+public class CommandStrategyFactory {
     private ApplicationContext context;
 
-    public HandlingStrategy getHandler(String command) {
+    public CommandStrategy getCommandStrategy(String command) {
         return switch (command) {
             case "/start" -> context.getBean(StartCommandStrategy.class);
             case "/help" -> context.getBean(HelpCommandStrategy.class);

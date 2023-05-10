@@ -17,7 +17,7 @@ import java.util.List;
 
 @Component
 @AllArgsConstructor
-public class JokeCommandStrategy implements HandlingStrategy {
+public class JokeCommandStrategy implements CommandStrategy {
     private JokeService jokeService;
     private UserService userService;
     private TgApiUtility tgApiUtility;

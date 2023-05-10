@@ -7,6 +7,7 @@ import com.odoyevsky.service.JokeService;
 import com.odoyevsky.service.UserService;
 import com.odoyevsky.utility.TgApiUtility;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -15,9 +16,10 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Component
 @AllArgsConstructor
-public class CategoryCommandStrategy implements HandlingStrategy {
+public class CategoryCommandStrategy implements CommandStrategy {
     private JokeService jokeService;
     private TgApiUtility tgApiUtility;
     private UserService userService;
@@ -39,8 +41,10 @@ public class CategoryCommandStrategy implements HandlingStrategy {
             } else sendMessage.setReplyMarkup(tgApiUtility.createInlineKeyboardMarkupHeart());
 
         } catch (JokeNotFoundException e) {
+            log.info(e.getMessage());
             sendMessage.setText("Я не знаю шуток на эту тему " + Emojis.CRYING);
         } catch (UserNotFoundException e){
+            log.info(e.getMessage());
             sendMessage.setText("Что-то пошло не так" + Emojis.CRYING);
         }
 

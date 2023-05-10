@@ -18,7 +18,7 @@ import java.util.List;
 
 @Component
 @AllArgsConstructor
-public class AddFavouriteCommandStrategy implements HandlingStrategy {
+public class AddFavouriteCommandStrategy implements CommandStrategy {
     private UserService userService;
     private TgApiUtility tgApiUtility;
 

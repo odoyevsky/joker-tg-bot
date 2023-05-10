@@ -5,6 +5,6 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.util.List;
 
-public interface HandlingStrategy {
+public interface CommandStrategy {
     List<BotApiMethod<?>> handle(Update update);
 }

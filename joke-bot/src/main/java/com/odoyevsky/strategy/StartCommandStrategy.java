@@ -12,7 +12,7 @@ import java.util.List;
 
 @Component
 @AllArgsConstructor
-public class StartCommandStrategy implements HandlingStrategy {
+public class StartCommandStrategy implements CommandStrategy {
     private UserRepository userRepository;
     private TgApiUtility tgApiUtility;
 

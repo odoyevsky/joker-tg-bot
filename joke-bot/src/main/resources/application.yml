@@ -6,7 +6,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate.ddl-auto: none
-    show-sql: true
+#    show-sql: true
   sql:
     init.mode: always
 
@@ -16,4 +16,4 @@ bot:
 server:
   port: 8088
 
-server_path: "http://localhost:8087"
+server_path: "http://localhost:8091"
