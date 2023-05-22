@@ -1,19 +1,22 @@
-spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/joke-bot
-    username: postgres
-    password: password
-  jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-    hibernate.ddl-auto: none
-#    show-sql: true
-  sql:
-    init.mode: always
-
-bot:
-  token: ${BOT_TOKEN}
-  name: RussianJokeBot
-server:
-  port: 8088
-
-server_path: "http://localhost:8091"
+app: ''
+bot: ''
+database-platform: org.hibernate.dialect.PostgreSQLDialect
+datasource: ''
+description: Spring Boot Application
+hibernate:
+    ddl-auto: none
+info: ''
+init:
+    mode: always
+jpa: ''
+name: Joke Bot
+password: password
+port: 8088
+scraper: ''
+server: ''
+show-sql: true
+spring: ''
+sql: ''
+token: ${BOT_TOKEN}
+url: ${JOKE_SCRAPER_URL}
+username: postgres
