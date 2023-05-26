@@ -5,3 +5,19 @@ spring:
     exclude:
       - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
       - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+
+anekdotovNet:
+  url: "https://anekdotov.net"
+  menuXpath: "/html/body/center/div/div[2]/center/p[2]/table/tbody/tr[2]/td/table"
+  invalidCategories:
+    - "рассакажи анекдот"
+    - "архив по дням"
+    - "лучшие в этот день"
+    - "анекдоты дня"
+    - "сегодня"
+    - "лучшие архив"
+    - "лучшие в этот день"
+    - "лучшие за месяц"
+    - "лучшие за неделю"
+    - "новые"
+    - "расскажи анекдот"
