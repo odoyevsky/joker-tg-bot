@@ -44,6 +44,19 @@ services:
     networks:
       - botnet
 
+  scraper:
+    build: "joke-scraper"
+    container_name: scraper
+    ports:
+      - "8091:8091"
+    depends_on:
+      - kafka
+    networks:
+      - botnet
+    environment:
+      - KAFKA_HOST=kafka:9092
+      - JOKE_TOPIC=jokes
+
 networks:
   botnet:
     driver: bridge
