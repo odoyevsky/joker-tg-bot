@@ -5,8 +5,20 @@ spring:
     exclude:
       - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
       - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+  kafka:
+    bootstrap-servers: ${KAFKA_HOST}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      joke-topic: jokes
 
-anekdotovNet:
+joke-topic: jokes
+
+management:
+  security:
+    enabled: false
+
+anekdotov-net:
   url: "https://anekdotov.net"
   menuXpath: "/html/body/center/div/div[2]/center/p[2]/table/tbody/tr[2]/td/table"
   invalidCategories:
