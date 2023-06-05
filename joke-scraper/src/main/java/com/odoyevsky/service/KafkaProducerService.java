@@ -1,9 +1,7 @@
 package com.odoyevsky.service;
 
 import com.odoyevsky.model.CategoryJokes;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -12,7 +10,6 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class KafkaProducerService {
     private KafkaTemplate<String, CategoryJokes> kafkaTemplate;
-    @Value("${joke-topic}")
     private String topicName;
 
     public KafkaProducerService(KafkaTemplate<String, CategoryJokes> kafkaTemplate, @Value("${joke-topic}") String topicName){
