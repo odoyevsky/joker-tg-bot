@@ -1,6 +1,6 @@
 package com.odoyevsky.config;
 
-import com.odoyevsky.scraper.FacebookConnectionBlocker;
+import com.odoyevsky.service.scraper.FacebookConnectionBlocker;
 import org.htmlunit.WebClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

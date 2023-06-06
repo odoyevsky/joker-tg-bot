@@ -1,4 +1,4 @@
-package com.odoyevsky.scraper;
+package com.odoyevsky.service.scraper;
 
 import com.odoyevsky.exception.BlockedUrlException;
 import org.htmlunit.WebClient;

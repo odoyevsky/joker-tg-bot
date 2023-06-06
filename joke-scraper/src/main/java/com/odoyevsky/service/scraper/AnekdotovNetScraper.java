@@ -1,4 +1,4 @@
-package com.odoyevsky.scraper;
+package com.odoyevsky.service.scraper;
 
 import com.odoyevsky.config.AnekdotovNetConfig;
 import com.odoyevsky.model.Category;
@@ -11,7 +11,7 @@ import org.htmlunit.html.DomNode;
 import org.htmlunit.html.HtmlElement;
 import org.htmlunit.html.HtmlPage;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -20,7 +20,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Slf4j
-@Component
+@Service
 @AllArgsConstructor
 @EnableConfigurationProperties(AnekdotovNetConfig.class)
 public class AnekdotovNetScraper implements JokeScraper {
