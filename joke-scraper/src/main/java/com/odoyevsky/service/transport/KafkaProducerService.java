@@ -1,4 +1,4 @@
-package com.odoyevsky.service;
+package com.odoyevsky.service.transport;
 
 import com.odoyevsky.model.CategoryJokes;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class KafkaProducerService implements TransportService{
+public class KafkaProducerService implements TransportService {
     private KafkaTemplate<String, CategoryJokes> kafkaTemplate;
     private String topicName;
 
@@ -19,7 +19,7 @@ public class KafkaProducerService implements TransportService{
     }
 
     @Override
-    public void sendMessage(CategoryJokes categoryJokes){
+    public void send(CategoryJokes categoryJokes){
         try {
             kafkaTemplate.send(topicName, categoryJokes);
             log.info("Отправлено в кафку: " + categoryJokes);
