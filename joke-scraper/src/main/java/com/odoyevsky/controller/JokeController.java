@@ -1,32 +1,31 @@
 package com.odoyevsky.controller;
 
-import com.odoyevsky.dto.CategoriesDTO;
-import com.odoyevsky.dto.JokesDTO;
+import com.odoyevsky.dto.CategoryJokes;
 import com.odoyevsky.service.JokeService;
+import com.odoyevsky.service.transport.KafkaProducerService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @AllArgsConstructor
 public class JokeController {
     private JokeService jokeService;
+    private KafkaProducerService producer;
 
-    @GetMapping("/jokes")
-    public List<JokesDTO> getAllJokes(){
-        return jokeService.getAllJokes();
+
+    @GetMapping("/kafka/jokes")
+    public ResponseEntity<String> getJokes(){
+        jokeService.scrapeAndSend();
+        return ResponseEntity.ok("отправил все в кафку");
     }
 
-    @GetMapping("/categories")
-    public CategoriesDTO getCategories(){
-        return jokeService.getCategories();
-    }
-
-    @GetMapping("/jokes/{category}")
-    public JokesDTO getCategoryJokes(@PathVariable("category") String category){
-        return jokeService.getCategoryJokes(category);
+    @PostMapping("/kafka/jokes")
+    public ResponseEntity<String> sendJoke(@RequestBody CategoryJokes categoryJokes){
+        producer.send(categoryJokes);
+        return ResponseEntity.ok("отправил в кафку");
     }
 }
