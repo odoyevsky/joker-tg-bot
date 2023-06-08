@@ -2,7 +2,7 @@ package com.odoyevsky.service.scraper;
 
 import com.odoyevsky.config.AnekdotovNetConfig;
 import com.odoyevsky.model.Category;
-import com.odoyevsky.model.CategoryJokes;
+import com.odoyevsky.dto.CategoryJokes;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.htmlunit.FailingHttpStatusCodeException;

@@ -1,6 +1,6 @@
 package com.odoyevsky.service.transport;
 
-import com.odoyevsky.model.CategoryJokes;
+import com.odoyevsky.dto.CategoryJokes;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.KafkaException;

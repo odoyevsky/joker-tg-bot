@@ -1,7 +1,7 @@
 package com.odoyevsky.service.scraper;
 
 import com.odoyevsky.model.Category;
-import com.odoyevsky.model.CategoryJokes;
+import com.odoyevsky.dto.CategoryJokes;
 
 import java.util.List;
 
