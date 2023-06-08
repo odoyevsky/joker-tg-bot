@@ -10,9 +10,8 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-      joke-topic: jokes
 
-joke-topic: jokes
+joke-topic: ${JOKE_TOPIC}
 
 management:
   security:
