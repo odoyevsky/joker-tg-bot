@@ -1,19 +1,18 @@
 package com.odoyevsky.config;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.meta.api.objects.commands.BotCommand;
 
-@Getter
+import java.util.ArrayList;
+import java.util.List;
+
+@Data
 @Component
-@PropertySource("classpath:application.yml")
-@NoArgsConstructor
+@ConfigurationProperties(prefix = "bot")
 public class BotConfiguration {
-    @Value("${bot.name}")
     private String name;
-
-    @Value("${bot.token}")
     private String token;
+    private List<BotCommand> commands = new ArrayList<>();
 }
