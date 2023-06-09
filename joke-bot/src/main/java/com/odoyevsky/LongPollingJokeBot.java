@@ -3,6 +3,7 @@ package com.odoyevsky;
 import com.odoyevsky.config.BotConfiguration;
 import com.odoyevsky.handler.RequestHandler;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
@@ -13,19 +14,18 @@ import org.telegram.telegrambots.meta.api.objects.commands.scope.BotCommandScope
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Component
 @AllArgsConstructor
+@Slf4j
 public class LongPollingJokeBot extends TelegramLongPollingBot {
     private BotConfiguration botConfiguration;
     private RequestHandler requestHandler;
 
     @PostConstruct
     private void init() {
-        addCommands(getCommands());
+        addCommands(botConfiguration.getCommands());
     }
 
     @Override
@@ -41,7 +41,7 @@ public class LongPollingJokeBot extends TelegramLongPollingBot {
         try {
             execute(message);
         } catch (TelegramApiException e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
     }
 
@@ -49,19 +49,8 @@ public class LongPollingJokeBot extends TelegramLongPollingBot {
         try {
             execute(new SetMyCommands(botCommands, new BotCommandScopeDefault(), null));
         } catch (TelegramApiException e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
-    }
-
-    private List<BotCommand> getCommands() {
-        return new ArrayList<>(
-                Arrays.asList(
-                        new BotCommand("/joke", "случайная шутка "),
-                        new BotCommand("/categories", "список тем"),
-                        new BotCommand("/favourites", "избранные шутки"),
-                        new BotCommand("/help", "справочная информация")
-                )
-        );
     }
 
     @Override
