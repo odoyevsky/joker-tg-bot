@@ -22,7 +22,7 @@ services:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://kafka:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_INTERNAL://kafka:9093
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
@@ -45,7 +45,7 @@ services:
       - botnet
 
   scraper:
-    build: "joke-scraper"
+    build: joke-scraper
     container_name: scraper
     ports:
       - "8091:8091"
@@ -57,7 +57,65 @@ services:
       - KAFKA_HOST=kafka:9092
       - JOKE_TOPIC=jokes
 
+  postgres:
+    image: postgres:15.3-alpine3.18
+    container_name: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - "7032:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready", "--quiet" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - botnet
+
+  bot:
+    build: joke-bot
+    container_name: bot
+    ports:
+      - "8098:8098"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - botnet
+    environment:
+      - KAFKA_HOST=kafka:9092
+      - JOKE_TOPIC=jokes
+      - BOT_TOKEN=${BOT_TOKEN}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - DATA_SOURCE=postgres:5432
+      - KAFKA_GROUP_ID=botID
+      - BD_USERNAME=${POSTGRES_USER}
+      - BD_PASSWORD=${POSTGRES_PASSWORD}
+
+#  pgadmin:
+#    container_name: pgadmin4_container
+#    image: dpage/pgadmin4:7
+#    restart: always
+#    environment:
+#      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+#      PGADMIN_DEFAULT_PASSWORD: root
+#    ports:
+#      - "5050:80"
+#    volumes:
+#      - pgadmin-data:/var/lib/pgadmin
+#    networks:
+#      - botnet
+
 networks:
   botnet:
     driver: bridge
     name: botnet
+
+volumes:
+  postgres-data:
+  pgadmin-data:
