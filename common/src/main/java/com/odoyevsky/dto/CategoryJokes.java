@@ -1,4 +1,4 @@
-package com.odoyevsky.model;
+package com.odoyevsky.dto;
 
 import java.util.Set;
 
