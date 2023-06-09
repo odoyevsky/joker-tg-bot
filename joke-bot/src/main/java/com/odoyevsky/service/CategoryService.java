@@ -1,19 +1,30 @@
 package com.odoyevsky.service;
 
+import com.odoyevsky.dto.CategoryJokes;
 import com.odoyevsky.model.entity.Category;
 import com.odoyevsky.model.repository.CategoryRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@Component
+@Service
+@Slf4j
 @AllArgsConstructor
 public class CategoryService {
     private CategoryRepository categoryRepository;
 
-    //TODO throw Exception if repo is empty
+    public Category save(String categoryName){
+        return categoryRepository.findByName(categoryName).orElseGet(() -> {
+            Category category = new Category(categoryName);
+            categoryRepository.save(category);
+            log.info("Категория добавлена в БД: " + category.getName());
+            return category;
+        });
+    }
+
     public Set<Category> getCategories(){
         Iterable<Category> categoryIterable = categoryRepository.findAll();
 

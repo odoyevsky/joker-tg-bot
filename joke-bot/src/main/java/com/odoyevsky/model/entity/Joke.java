@@ -1,6 +1,7 @@
 package com.odoyevsky.model.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.util.Set;
 @Table(name = "jokes")
 @ToString
 @Getter
+@NoArgsConstructor
 public class Joke {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +30,11 @@ public class Joke {
     @ToString.Exclude
     @ManyToMany(mappedBy = "favouriteJokes")
     private Set<User> users;
+
+    public Joke(String text, Category category){
+        this.text = text;
+        this.category = category;
+    }
 
     @Override
     public boolean equals(Object o) {

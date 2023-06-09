@@ -1,6 +1,7 @@
 package com.odoyevsky.model.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.util.Objects;
 @Table(name = "categories")
 @ToString
 @Getter
+@NoArgsConstructor
 public class Category {
     @Id
     @Column(name = "category_id")
@@ -23,6 +25,10 @@ public class Category {
     @ToString.Exclude
     @OneToMany(mappedBy = "category")
     private List<Joke> jokes;
+
+    public Category(String category){
+        this.name = category;
+    }
 
     @Override
     public boolean equals(Object o){
