@@ -62,16 +62,16 @@ public class TgApiUtility {
 
     private List<InlineKeyboardButton> createJokeRowWithBrokenHeart() {
         return List.of(
-                createInLineButton(Emojis.LIKE, "/like_joke"),
-                createInLineButton(Emojis.DISLIKE, "/dislike_joke"),
+                //   createInLineButton(Emojis.LIKE, "/like_joke"),
+                // createInLineButton(Emojis.DISLIKE, "/dislike_joke"),
                 createInLineButton(Emojis.BROKEN_HEART, "/remove_favourite_joke")
         );
     }
 
     private List<InlineKeyboardButton> createJokeRowWithHeart() {
         return List.of(
-                createInLineButton(Emojis.LIKE, "/like_joke"),
-                createInLineButton(Emojis.DISLIKE, "/dislike_joke"),
+               // createInLineButton(Emojis.LIKE, "/like_joke"),
+               // createInLineButton(Emojis.DISLIKE, "/dislike_joke"),
                 createInLineButton(Emojis.HEART, "/add_favourite_joke")
         );
     }

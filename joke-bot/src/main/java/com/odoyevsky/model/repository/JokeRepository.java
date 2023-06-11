@@ -26,9 +26,7 @@ public interface JokeRepository extends CrudRepository<Joke, Long> {
                     SELECT j.* from jokes j
                     JOIN categories c
                     ON c.category_id = j.category_id AND c.name = :category
-                    JOIN (SELECT RANDOM() * (SELECT MAX(j.joke_id) FROM jokes j) as max_id) as m
-                    ON j.joke_id >= m.max_id
-                    LIMIT 1
+                    ORDER BY random() LIMIT 1
                     """
     )
     Optional<Joke> getCategoryJoke(@Param("category") String category);
