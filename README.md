@@ -1,6 +1,10 @@
 ## **Joke telegram bot**
 
-Телеграм бот, который является Spring Boot приложением.
+Телеграм бот с шутками, который является Spring Boot приложением.
+
+Вычитывает шутки из Kafka, сохраняя в БД.
+
+Приложение доступно: https://t.me/RussianJokeBot
 
 ### Функционал:
 
@@ -13,14 +17,17 @@
 
 ## **Joke scraper**
 
-Spring Boot приложение, которое осуществляет скрейпинг шуток с сайта и выдает их по http запросу
+Spring Boot приложение, которое осуществляет скрейпинг шуток
+
+По HTTP запросу стартует скрейпинг и запись в Kafka.
 
 ## Используемые технологии:
 
 * Java 17
-* Spring Boot, Spring Data, Spring MVC
-* Project Lombok - аннотации
-* TelegramBots - создание телеграм бота
-* HtmlUnit - скрейпинг
-* PostgreSQL - база данных
-* Maven - сборка проекта
+* Spring Boot, Spring Data, Spring MVC, Spring Kafka
+* Docker/Docker Compose
+* Project Lombok
+* TelegramBots
+* HtmlUnit
+* PostgreSQL
+* Maven
