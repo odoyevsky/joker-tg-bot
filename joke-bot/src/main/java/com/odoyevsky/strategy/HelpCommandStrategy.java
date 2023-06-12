@@ -24,7 +24,7 @@ public class HelpCommandStrategy implements CommandStrategy {
             Если она тебе больше не нравится, и ты хочешь ее убрать из списка %s
             
             /favourites - избранные шутки
-            """.formatted(Emojis.LIKE, Emojis.DISLIKE, Emojis.HEART, Emojis.BROKEN_HEART);
+            """.formatted(Emojis.HEART, Emojis.BROKEN_HEART);
 
     @Override
     public List<BotApiMethod<?>> handle(Update update) {
