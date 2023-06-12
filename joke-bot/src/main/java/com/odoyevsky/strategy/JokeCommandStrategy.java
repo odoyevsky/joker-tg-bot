@@ -7,6 +7,7 @@ import com.odoyevsky.emojis.Emojis;
 import com.odoyevsky.service.UserService;
 import com.odoyevsky.utility.TgApiUtility;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @Component
 @AllArgsConstructor
+@Slf4j
 public class JokeCommandStrategy implements CommandStrategy {
     private JokeService jokeService;
     private UserService userService;
@@ -40,8 +42,10 @@ public class JokeCommandStrategy implements CommandStrategy {
 
         } catch (JokeNotFoundException e) {
             sendMessage.setText("Я не знаю шуток на эту тему " + Emojis.CRYING);
+            log.info(e.getMessage());
         } catch (UserNotFoundException e){
-            sendMessage.setText("Что-то пошло не так" + Emojis.CRYING);
+            sendMessage.setText("Что-то пошло не так. Попробуйте /start" + Emojis.CRYING);
+            log.info(e.getMessage() + " " + chatId);
         }
 
         messages.add(sendMessage);

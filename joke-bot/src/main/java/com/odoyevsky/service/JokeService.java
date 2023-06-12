@@ -20,11 +20,12 @@ public class JokeService {
         Category category = categoryService.save(categoryJokes.category());
 
         categoryJokes.jokes().forEach(joke -> {
+            String trimmedJoke = joke.trim();
             try {
-                getJokeByText(joke);
+                getJokeByText(trimmedJoke);
             } catch (JokeNotFoundException e) {
-                jokeRepository.save(new Joke(joke, category));
-                log.info("Шутка сохранена: " + joke);
+                jokeRepository.save(new Joke(trimmedJoke, category));
+                log.info("Шутка сохранена: " + trimmedJoke);
             }
         });
     }
