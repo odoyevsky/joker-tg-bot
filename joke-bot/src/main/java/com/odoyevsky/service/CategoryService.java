@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 @Service
 @Slf4j
@@ -16,7 +17,7 @@ import java.util.Set;
 public class CategoryService {
     private CategoryRepository categoryRepository;
 
-    public Category save(String categoryName){
+    public Category save(String categoryName) {
         return categoryRepository.findByName(categoryName).orElseGet(() -> {
             Category category = new Category(categoryName);
             categoryRepository.save(category);
@@ -25,10 +26,16 @@ public class CategoryService {
         });
     }
 
-    public Set<Category> getCategories(){
+    public Set<Category> getCategories() {
         Iterable<Category> categoryIterable = categoryRepository.findAll();
 
-        Set<Category> categorySet = new HashSet<>();
+        Set<Category> categorySet = new TreeSet<>((
+                (category1, category2) -> {
+                    return category1.getName().compareTo(category2.getName());
+                }
+        )
+        );
+
         categoryIterable.forEach(categorySet::add);
 
         return categorySet;
