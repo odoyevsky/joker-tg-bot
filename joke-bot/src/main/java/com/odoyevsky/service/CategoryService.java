@@ -1,13 +1,11 @@
 package com.odoyevsky.service;
 
-import com.odoyevsky.dto.CategoryJokes;
 import com.odoyevsky.model.entity.Category;
 import com.odoyevsky.model.repository.CategoryRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
