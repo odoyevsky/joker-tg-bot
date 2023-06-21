@@ -7,7 +7,7 @@ services:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
     ports:
-      - "2181:2181"
+      - "127.0.0.1:2181:2181"
     networks:
       - botnet
 
@@ -15,7 +15,7 @@ services:
     image: confluentinc/cp-kafka:7.4.0
     container_name: kafka
     ports:
-      - "9095:9095"
+      - "127.0.0.1:9095:9095"
     depends_on:
       - zookeeper
     environment:
@@ -48,7 +48,7 @@ services:
     build: joke-scraper
     container_name: scraper
     ports:
-      - "8091:8091"
+      - "127.0.0.1:8091:8091"
     depends_on:
       - kafka
     networks:
@@ -81,7 +81,7 @@ services:
     build: joke-bot
     container_name: bot
     ports:
-      - "8098:8098"
+      - "127.0.0.1:8098:8098"
     depends_on:
       postgres:
         condition: service_healthy
