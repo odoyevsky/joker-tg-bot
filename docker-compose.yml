@@ -87,6 +87,7 @@ services:
         condition: service_healthy
     networks:
       - botnet
+    restart: unless-stopped
     environment:
       - KAFKA_HOST=kafka:9092
       - JOKE_TOPIC=jokes
